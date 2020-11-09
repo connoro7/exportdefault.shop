@@ -31,6 +31,15 @@ The technologies included in this project include (but not limited to):
 2. Navigate to `./frontend` and install packages via `$ npm i`
 3. ...
 
+## API
+
+`console.shop` has a RESTful API architecture. The frontend and backend communicate via HTTP methods and JSON data, while the backend communicates with the MongoDB database via Mongoose.
+
+- `GET`: `/api/products`
+- `POST`: `/api/products`
+- `PUT`: `/api/products/99`
+- `DELETE`: `/api/products/99`
+
 ## Running the tests
 
 - TBD
