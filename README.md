@@ -14,6 +14,7 @@ The technologies included in this project include (but not limited to):
 - State management via **Redux** (`actions`, `reducers`)
 - **Redux**-mananaged componenents (`useDispatch`, `useSelector`)
 - **Express** back-end server
+  - **Express Async Handler**
 - Live **MongoDB** integration, and **Mongoose ODM**
 - **JWT** authentication
 - Fully custom authentication middleware
