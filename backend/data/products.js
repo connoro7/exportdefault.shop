@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'Banana Phone',
     image: '/images/banana.jpg',
     description:
@@ -13,7 +12,6 @@ const products = [
     numReviews: 12,
   },
   {
-    _id: '2',
     name: 'Popcorn Debugger 9000',
     image: '/images/popcorn.jpg',
     description:
@@ -26,7 +24,6 @@ const products = [
     numReviews: 8,
   },
   {
-    _id: '3',
     name: 'Egg Cloaking Device',
     image: '/images/eggs.jpg',
     description:
@@ -39,7 +36,6 @@ const products = [
     numReviews: 33,
   },
   {
-    _id: '4',
     name: 'The Bean',
     image: '/images/greenbean.jpg',
     description:
@@ -52,7 +48,6 @@ const products = [
     numReviews: 80,
   },
   {
-    _id: '5',
     name: 'Lemon Slice',
     image: '/images/lemon.jpg',
     description: "This is just a lemon slice... Or is it? Will your curiousity get the better of you? We know you'll make the right choice.",
@@ -64,7 +59,6 @@ const products = [
     numReviews: 42,
   },
   {
-    _id: '6',
     name: 'Pre-Pickle Slice',
     image: '/images/pickleslice.jpg',
     description:
