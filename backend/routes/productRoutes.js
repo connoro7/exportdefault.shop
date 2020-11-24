@@ -21,15 +21,15 @@ router.get(
  * @route GET /api/products/:id
  * @access Public
  */
-app.get(
+router.get(
   '/:id',
   asyncHandler(async (request, response) => {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(request.params.id)
 
     if (product) {
       response.json(product)
     } else {
-      res.status(404).json({ message: 'Product not found' })
+      response.status(404).json({ message: 'Product not found' })
     }
   })
 )
