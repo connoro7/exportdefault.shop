@@ -12,6 +12,9 @@ router.get(
   '/',
   asyncHandler(async (request, response) => {
     const products = await Product.find({})
+
+    // throw new Error('Error: CD_1')
+
     response.json(products)
   })
 )
