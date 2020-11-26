@@ -1,4 +1,4 @@
-import { axios } from 'axios'
+import axios from 'axios'
 import { CART_ADD_ITEM } from '../constants/cartConstants'
 
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
@@ -15,5 +15,5 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
     },
   })
 
-  localStorage.setItems('cartItems', JSON.stringify(getState().cart.cartItems))
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
