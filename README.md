@@ -1,10 +1,10 @@
-# console.shop
+# exportdefault.shop
 
 > A modern, fully-featured eCommerce platform built with MERN.
 
 ## Getting Started
 
-This project brings together everything you need for a fully-featured, fully custom, eCommerce site: product exploration and searching, product pages, carousels, and pagination, as well as authenticated sign-on and user accounts stored in a managed database, an admin dashboards to manage users/customers, products, and order details. The console.shop platform also has a product rating and review system, shopping carts, an integrated ordering system that handles marking orders as shipped/delivered, as well as the entire checkout process including shipping selection, payment options (credit/debit card processing, Paypal integration), and finally a custom database seeder script.
+This project brings together everything you need for a fully-featured, fully custom, eCommerce site: product exploration and searching, product pages, carousels, and pagination, as well as authenticated sign-on and user accounts stored in a managed database, an admin dashboards to manage users/customers, products, and order details. The exportdefault.shop platform also has a product rating and review system, shopping carts, an integrated ordering system that handles marking orders as shipped/delivered, as well as the entire checkout process including shipping selection, payment options (credit/debit card processing, Paypal integration), and finally a custom database seeder script.
 
 The technologies included in this project include (but not limited to):
 
@@ -34,7 +34,7 @@ The technologies included in this project include (but not limited to):
 
 ## API
 
-`console.shop` has a RESTful API architecture. The frontend and backend communicate via HTTP methods and JSON data, while the backend communicates with the MongoDB database via Mongoose.
+`exportdefault.shop` has a RESTful API architecture. The frontend and backend communicate via HTTP methods and JSON data, while the backend communicates with the MongoDB database via Mongoose.
 
 - `GET`: `/api/products`
 - `POST`: `/api/products`
@@ -80,7 +80,7 @@ The technologies included in this project include (but not limited to):
 ## Authors
 
 - **Connor Dillon** - _Developer_ - [connoro7](https://github.com/connoro7)
-- See also the list of [contributors](https://github.com/connoro7/console.shop/contributors) who participated in this project.
+- See also the list of [contributors](https://github.com/connoro7/exportdefault.shop/contributors) who participated in this project.
 
 ## License
 
