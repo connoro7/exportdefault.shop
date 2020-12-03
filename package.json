@@ -1,5 +1,5 @@
 {
-  "name": "console.shop",
+  "name": "exportdefault.shop",
   "version": "1.0.0",
   "description": "MERN eCommerce site",
   "main": "server.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/connoro7/console.shop.git"
+    "url": "git+https://github.com/connoro7/exportdefault.shop.git"
   },
   "author": "Connor Dillon",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/connoro7/console.shop/issues"
+    "url": "https://github.com/connoro7/exportdefault.shop/issues"
   },
-  "homepage": "https://github.com/connoro7/console.shop",
+  "homepage": "https://github.com/connoro7/exportdefault.shop",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
