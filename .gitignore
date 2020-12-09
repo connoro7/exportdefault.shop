@@ -21,9 +21,11 @@ node_modules/
 .env.production.local
 .eslintcache
 
+# logging
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/logs
 
 # dev docs
 notes.md

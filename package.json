@@ -10,7 +10,9 @@
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
-    "data:delete": "node backend/seeder -d"
+    "data:delete": "node backend/seeder -d",
+    "log": "cat ./logs/app.log",
+    "log-d": "date > ./logs/app.log"
   },
   "repository": {
     "type": "git",
@@ -23,13 +25,15 @@
   },
   "homepage": "https://github.com/connoro7/exportdefault.shop",
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.18"
+    "mongoose": "^5.10.18",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
