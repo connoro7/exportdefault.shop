@@ -40,6 +40,25 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)
 }
 
+/**
+ * Handles the salting and hashing of a password *before* saving it to the database
+ * @name hashPassword
+ * @this user
+ * @param {string} this.password
+ * @returns bcrypt.hash(this.password)
+ * @protected
+ */
+userSchema.pre('save', async function (next) {
+  // prevent new hash of password being made if user updates some account data, but not password
+  if (!this.isModified('password')) {
+    next()
+  }
+
+  // Re-assigns the plaintext password entered by user in the web app to the hashed version
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+})
+
 const User = mongoose.model('User', userSchema)
 
 export default User
