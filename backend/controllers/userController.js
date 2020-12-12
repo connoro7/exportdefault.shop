@@ -85,7 +85,7 @@ const getUserProfile = asyncHandler(async (request, response) => {
  * @route PUT /api/users/profile
  * @access Private
  * @protected
- * @throws 401 Unauthorized: If user is not found || If client auth token is malformed or not found
+ * @throws 404 Not Found: If user is not found
  */
 const updateUserProfile = asyncHandler(async (request, response) => {
   const user = await User.findById(request.user._id)
