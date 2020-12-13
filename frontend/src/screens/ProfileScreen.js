@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
-import { clearState } from '../actions/utilityActions'
+import { clearMessage } from '../actions/utilityActions'
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -42,7 +42,7 @@ const ProfileScreen = ({ history }) => {
 
     if (password !== confirmPassword) {
       setMessage('Passwords do not match!')
-      clearState(setMessage, 5000)
+      clearMessage(setMessage, 5000)
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
