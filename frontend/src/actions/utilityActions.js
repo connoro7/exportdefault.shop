@@ -1,11 +1,10 @@
 /**
- * Clears state from UI after specified time elapsed.
- * @param {*} state The state to be cleared.
- * @param {number} time Time (in ms) before state is cleared.
- * @description Initially built to only clear message states from UI, but modularized it to be able to clear any states.
+ * Clears message from UI after specified time elapsed.
+ * @param {*} message The message to be cleared.
+ * @param {number} time Time (in ms) before message is cleared.
  */
-export const clearState = (state, time) => {
+export const clearMessage = (message, time) => {
   setInterval(() => {
-    state(null)
+    message(null)
   }, time)
 }
