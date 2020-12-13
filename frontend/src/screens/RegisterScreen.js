@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
+import { clearState } from '../actions/utilityActions'
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -32,6 +33,7 @@ const RegisterScreen = ({ location, history }) => {
 
     if (password !== confirmPassword) {
       setMessage('Passwords do not match!')
+      clearState(setMessage, 5000)
     } else {
       dispatch(register(name, email, password))
     }
