@@ -36,10 +36,14 @@ The technologies included in this project include (but not limited to):
 
 `exportdefault.shop` has a RESTful API architecture. The frontend and backend communicate via HTTP methods and JSON data, while the backend communicates with the MongoDB database via Mongoose.
 
-- `GET`: `/api/products`
-- `POST`: `/api/products`
-- `PUT`: `/api/products/99`
-- `DELETE`: `/api/products/99`
+```
+/api
+├── /products
+│   └── /_id
+└── /users
+    ├── /login
+    └── /profile 
+```
 
 ## Running the tests
 
