@@ -16,6 +16,7 @@ const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
+
   const { loading, error, user } = userDetails
 
   const userLogin = useSelector((state) => state.userLogin)
