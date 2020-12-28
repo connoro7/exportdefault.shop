@@ -9,10 +9,21 @@ const PlaceOrderScreen = () => {
     const cart = useSelector(state => state.cart)
 
     // Calculate prices:
+    // Forces decimal value of price to display to hundredths
+    const fixPriceDecimals = (number) => {
+        return (Math.round(number * 100 ) / 100).toFixed(2)
+    } 
     // + subtotal = sum of all items
-    // + shipping price
+    cart.subtotal = fixPriceDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0))
+    // + shipping price, $10 if subtotal is under $100, else free
+    cart.shippingPrice = fixPriceDecimals(cart.itemsPrice > 100 ? 0 : 10)
     // + tax price
+    cart.taxPrice = fixPriceDecimals(Number((0.15 * cart.subtotal.toFixed(2)))
     // = total price
+    cart.totalPrice = (Number(cart.subtotal) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2) 
+
+    
+    
 
     const placeOrderHandler = () => {
         console.log('place order handler')
