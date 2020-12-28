@@ -26,3 +26,5 @@ const addOrderItems = asyncHandler(async (request, response) => {
 
   response.json(products)
 })
+
+export { addOrderItems }
