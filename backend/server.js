@@ -5,6 +5,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes'
 
 dotenv.config()
 
@@ -19,6 +20,9 @@ app.use('/api/products', productRoutes)
 
 // Mounts user routers onto the API at '/api/users' address
 app.use('/api/users', userRoutes)
+
+// Mounts order routers onto the API at '/api/orders' address
+app.use('/api/orders', orderRoutes)
 
 app.use(notFound)
 
