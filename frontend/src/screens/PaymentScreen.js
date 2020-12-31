@@ -14,7 +14,7 @@ const PaymentScreen = ({ history }) => {
     history.push('/shipping')
   }
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal')
+  const [paymentMethod, setPaymentMethod] = useState()
 
   const dispatch = useDispatch()
 
@@ -41,7 +41,6 @@ const PaymentScreen = ({ history }) => {
               id='PayPal'
               name='paymentMethod'
               value='PayPal'
-              checked
               onChange={(e) => {
                 setPaymentMethod(e.target.value)
               }}
@@ -52,7 +51,6 @@ const PaymentScreen = ({ history }) => {
               id='Stripe'
               name='paymentMethod'
               value='Stripe'
-              checked
               onChange={(e) => {
                 setPaymentMethod(e.target.value)
               }}
