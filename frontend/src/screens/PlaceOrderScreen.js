@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,7 +24,7 @@ const PlaceOrderScreen = ({ history }) => {
   cart.shippingPrice = fixPriceDecimals(cart.itemsPrice > 100 ? 0 : 10)
 
   // + tax price
-  cart.taxPrice = fixPriceDecimals(Number(0.15 * cart.subtotal.toFixed(2)))
+  cart.taxPrice = fixPriceDecimals(Number(0.15 * cart.subtotal).toFixed(2))
 
   // = total price
   cart.totalPrice = (Number(cart.subtotal) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
@@ -44,7 +44,7 @@ const PlaceOrderScreen = ({ history }) => {
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        PaymentMethod: cart.PaymentMethod,
+        paymentMethod: cart.paymentMethod.paymentMethod,
         subtotal: cart.subtotal,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
@@ -62,14 +62,14 @@ const PlaceOrderScreen = ({ history }) => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
-                <strong>Address:</strong>
-                {cart.shippingAddress.address},{cart.shippingAddress.city} ,{cart.shippingAddress.postalCode}, {cart.shippingAddress.country}
+                <strong>Address: </strong>
+                {cart.shippingAddress.address}, {cart.shippingAddress.city} {cart.shippingAddress.postalCode}, {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Payment Method</h2>
               <strong>Method: </strong>
-              {cart.PaymentMethod}
+              {cart.paymentMethod.paymentMethod}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Order Details</h2>
@@ -135,7 +135,9 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroup.Item>{error && <Message variant='danger'>{error}</Message>}</ListGroup.Item>
 
               <ListGroup.Item>
-                <Button type='button' className='btn-block' disabled={cart.cartItems === 0} onClick={placeOrderHandler} />
+                <Button type='button' className='btn-block' disabled={cart.cartItems === 0} onClick={placeOrderHandler}>
+                  Place Order
+                </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
