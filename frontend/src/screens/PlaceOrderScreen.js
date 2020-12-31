@@ -21,7 +21,7 @@ const PlaceOrderScreen = ({ history }) => {
   cart.subtotal = fixPriceDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0))
 
   // + shipping price, $10 if subtotal is under $100, else free
-  cart.shippingPrice = fixPriceDecimals(cart.itemsPrice > 100 ? 0 : 10)
+  cart.shippingPrice = fixPriceDecimals(cart.subtotal > 100 ? 0 : 10)
 
   // + tax price
   cart.taxPrice = fixPriceDecimals(Number(0.15 * cart.subtotal).toFixed(2))
@@ -62,17 +62,22 @@ const PlaceOrderScreen = ({ history }) => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
-                <p>{cart.shippingAddress.name}</p>
-                <p>{cart.shippingAddress.address}</p>
-                <p>
-                  {cart.shippingAddress.city}, {cart.shippingAddress.stateOrProvince} {cart.shippingAddress.postalCode}, {cart.shippingAddress.country}
-                </p>
+                <strong>Ship to:</strong>
+              </p>
+              <p>
+                {cart.shippingAddress.name}
+                <br />
+                {cart.shippingAddress.addressOne}, {cart.shippingAddress.addressTwo}
+                <br />
+                {cart.shippingAddress.city}, {cart.shippingAddress.stateOrProvince} {cart.shippingAddress.postalCode}, {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Payment Method</h2>
-              <b>Method: </b>
-              {cart.paymentMethod.paymentMethod}
+              <p>
+                <strong>Method: </strong>
+                {cart.paymentMethod.paymentMethod}
+              </p>
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Order Details</h2>
