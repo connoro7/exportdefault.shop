@@ -42,7 +42,7 @@ const addOrderItems = asyncHandler(async (request, response) => {
  * @protected
  */
 const getOrderById = asyncHandler(async (request, response) => {
-  const order = await (await Order.findById(request.params.id)).populate('user', 'name email')
+  const order = await Order.findById(request.params.id).populate('user', 'name email')
 
   if (order) {
     response.json(order)
@@ -52,4 +52,30 @@ const getOrderById = asyncHandler(async (request, response) => {
   }
 })
 
-export { addOrderItems, getOrderById }
+/**
+ * Updates individual order state to `paid=true`
+ * @route GET /api/orders/:id/pay
+ * @access Private
+ * @protected
+ */
+const updateOrderToPaid = asyncHandler(async (request, response) => {
+  const order = await Order.findById(request.params.id)
+
+  if (order) {
+    order.isPaid = true
+    order.paidAt = Date.now()
+    order.paymentResult = {
+      id: request.body.id,
+      status: request.body.status,
+      update_time: request.body.update_time,
+      email_address: request.body.payer.email_address,
+    }
+    const updatedOrder = await order.save()
+    response.json(updatedOrder)
+  } else {
+    response.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+export { addOrderItems, getOrderById, updateOrderToPaid }
