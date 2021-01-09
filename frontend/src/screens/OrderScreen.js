@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,12 +9,19 @@ import { getOrderDetails } from '../actions/orderActions'
 
 const OrderScreen = ({ match }) => {
   const dispatch = useDispatch()
-  const orderId = match.params.id
 
+  const [sdkready, setSdkReady] = useState(false)
+
+  const orderId = match.params.id
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
+
   const userInfo = useSelector((state) => state.userLogin.userInfo)
   const { email } = userInfo
+
+  const orderPayment = useSelector((state) => state.orderPayment)
+  // renaming loading and success because it's already been called
+  const { loading: loadingPay, success: successPay } = orderPayment
 
   if (!loading) {
     // Calculate prices:
@@ -22,15 +30,38 @@ const OrderScreen = ({ match }) => {
       return (Math.round(number * 100) / 100).toFixed(2)
     }
 
-    // + subtotal = sum of all items
+    // subtotal = sum of all items
     order.subtotal = fixPriceDecimals(order.orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0))
   }
 
   useEffect(() => {
+    const addPayPalScript = async () => {
+      const { data: clientId } = await axios.get('/api/config/paypal')
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.async = true
+      script.onload = () => {
+        setSdkReady(true)
+      }
+      document.body.appendChild(script)
+    }
+    // If order doesn't exist or has already been paid for, then dispatch orderId
+    if (!order || successPay) {
+      dispatch(getOrderDetails(orderId))
+    }
+    // If order hasn't been paid for, check to see if paypal script has been loaded. If not, then load paypal script.
+    else if (!order.isPaid) {
+      if (!window.paypal) {
+        addPayPalScript()
+      }
+    } else {
+      setSdkReady(true)
+    }
     if (!order || order._id !== orderId) {
       dispatch(getOrderDetails(orderId))
     }
-  }, [dispatch, order, orderId])
+  }, [dispatch, orderId, successPay, order])
 
   return loading ? (
     <Loader />
@@ -58,7 +89,7 @@ const OrderScreen = ({ match }) => {
                 <br />
                 {order.shippingAddress.city}, {order.shippingAddress.stateOrProvince} {order.shippingAddress.postalCode}, {order.shippingAddress.country}
               </p>
-              {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='danger'>Not Delivered</Message>}
+              {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='primary'>Not yet delivered</Message>}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Payment Method</h2>
@@ -66,7 +97,7 @@ const OrderScreen = ({ match }) => {
                 <strong>Method: </strong>
                 {order.paymentMethod}
               </p>
-              {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message> : <Message variant='danger'>Not paid</Message>}
+              {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message> : <Message variant='primary'>Payment processing...</Message>}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Order Details</h2>

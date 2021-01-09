@@ -24,6 +24,8 @@ app.use('/api/users', userRoutes)
 // Mounts order routers onto the API at '/api/orders' address
 app.use('/api/orders', orderRoutes)
 
+app.get('/api/config/paypal', (request, response) => response.send(process.env.PAYPAL_CLIENT_ID))
+
 app.use(notFound)
 
 app.use(errorHandler)
@@ -32,6 +34,10 @@ const PORT = process.env.PORT || 5000
 
 app.get('/', (request, response) => {
   response.send('API running :)')
+})
+
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname, '/../', 'build', 'index.html'))
 })
 
 app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold))
