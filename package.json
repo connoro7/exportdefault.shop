@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/connoro7/exportdefault.shop/issues"
   },
-  "homepage": "https://github.com/connoro7/exportdefault.shop",
+  "homepage": ".",
   "dependencies": {
     "app-root-path": "^3.0.0",
     "bcryptjs": "^2.4.3",
