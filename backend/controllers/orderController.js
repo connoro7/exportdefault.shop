@@ -69,6 +69,7 @@ const updateOrderToPaid = asyncHandler(async (request, response) => {
       status: request.body.status,
       updateTime: request.body.update_time,
       emailAddress: request.body.payer.email_address,
+      
     }
     const updatedOrder = await order.save()
     response.json(updatedOrder)
