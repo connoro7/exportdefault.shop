@@ -78,6 +78,7 @@ const PlaceOrderScreen = ({ history }) => {
                 <strong>Method: </strong>
                 {cart.paymentMethod.paymentMethod}
               </p>
+              <Message variant='info'>Please place your order to proceed to payment screen.</Message>
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Order Details</h2>
