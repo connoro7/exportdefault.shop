@@ -69,7 +69,6 @@ const updateOrderToPaid = asyncHandler(async (request, response) => {
       status: request.body.status,
       updateTime: request.body.update_time,
       emailAddress: request.body.payer.email_address,
-      
     }
     const updatedOrder = await order.save()
     response.json(updatedOrder)
@@ -79,4 +78,15 @@ const updateOrderToPaid = asyncHandler(async (request, response) => {
   }
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid }
+/**
+ * Get logged in user's orders
+ * @route GET /api/orders/myorders
+ * @access Private
+ * @protected
+ */
+const getMyOrders = asyncHandler(async (request, response) => {
+  const orders = await Order.find({ user: request.user._id })
+  response.json(orders)
+})
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders }
