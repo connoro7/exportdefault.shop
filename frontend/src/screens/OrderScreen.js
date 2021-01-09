@@ -96,8 +96,8 @@ const OrderScreen = ({ match }) => {
                 <br />
                 {order.shippingAddress.city}, {order.shippingAddress.stateOrProvince} {order.shippingAddress.postalCode}, {order.shippingAddress.country}
               </p>
-              {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <></>}
-              {/* <Message variant='warning'>Not yet delivered</Message> */}
+              {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='info'>Not yet shipped</Message>}
+              {/*  */}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Payment Method</h2>
