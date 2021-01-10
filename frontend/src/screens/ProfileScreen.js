@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Table } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { showUserOrders } from '../actions/orderActions'
 import { clearMessage } from '../actions/utilityActions'
 
 const ProfileScreen = ({ history }) => {
@@ -16,7 +18,6 @@ const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
-
   const { loading, error, user } = userDetails
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -25,12 +26,16 @@ const ProfileScreen = ({ history }) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
 
+  const showMyOrders = useSelector((state) => state.showUserOrders)
+  const { loading: loadingOrders, error: errorOrders, orders } = showMyOrders
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
     } else {
       if (!user?.name) {
         dispatch(getUserDetails('profile'))
+        dispatch(showUserOrders())
       } else {
         setName(user.name)
         setEmail(user.email)
@@ -85,6 +90,66 @@ const ProfileScreen = ({ history }) => {
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>
+        {loadingOrders ? (
+          <Loader />
+        ) : errorOrders ? (
+          <Message variant='danger'>{errorOrders}</Message>
+        ) : (
+          <Table striped bordered hover responsive className='table-sm'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>STATUS</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <div>
+                        <i className='fas fa-times' style={{ color: 'red' }}></i> Not yet paid
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    {!order.isPaid ? (
+                      <div>Awaiting payment</div>
+                    ) : order.isDelievered ? (
+                      order.delieveredAt.substring(0, 10)
+                    ) : (
+                      <div>
+                        <i className='fas fa-times' style={{ color: 'red' }}></i>
+                        {/* TODO -- CD, Jan 9 2021
+                      Integrate order tracking via external freight logistics APIs 
+                      Look up existing universal order tracking apps, look into the APIs that they use
+                      Then add link to order tracking (from USPS, UPS, FedEx, DHL, )
+                      */}
+                        <i className='fas fa-shipping-fast'></i> Track shipment
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button className='btn-sm' variant='light'>
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </Col>
     </Row>
   )
