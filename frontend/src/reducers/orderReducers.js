@@ -67,7 +67,7 @@ export const orderPaymentReducer = (state = {}, action) => {
   }
 }
 
-export const orderShowUserOrdersReducer = (state = { orders: [] }, action) => {
+export const showUserOrdersReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_SHOW_USER_ORDERS_REQUEST:
       return { loading: true }
