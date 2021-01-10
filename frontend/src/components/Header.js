@@ -9,6 +9,16 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+
+  // TODO - CD - 1-10-21
+  // SEE ISSUE #79 - [FEATURE] Add quantity of cart items to Header component
+  let itemCount = 0
+  cartItems.forEach((item) => {
+    console.log(item.quantity)
+  })
+
   const logoutHandler = () => {
     dispatch(logout())
   }
@@ -25,14 +35,14 @@ const Header = () => {
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart'></i> Cart
+                  <i className='fas fa-shopping-cart'></i> Cart ({cartItems.length})
                 </Nav.Link>
               </LinkContainer>
 
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                    <NavDropdown.Item>Profile & Orders</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                 </NavDropdown>
