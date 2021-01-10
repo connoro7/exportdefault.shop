@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Link } from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { getOrderDetails, payOrder } from '../actions/orderActions'
 import { ORDER_PAYMENT_RESET } from '../constants/orderConstants'
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
   const dispatch = useDispatch()
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -70,12 +70,18 @@ const OrderScreen = ({ match }) => {
     console.log(paymentResult)
     dispatch(payOrder(orderId, paymentResult))
   }
+  const viewAllMyOrdersHandler = () => {
+    history.push('/profile')
+  }
   return loading ? (
     <Loader />
   ) : error ? (
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
+      <Button type='button' className='btn- btn-secondary' onClick={viewAllMyOrdersHandler}>
+        <i className='fas fa-angle-left'></i> View My Orders
+      </Button>
       <h1>Order #{order._id}</h1>
       <Row>
         <Col md={8}>
