@@ -6,6 +6,7 @@ import {
   USER_LIST_FAILED,
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
+  USER_LIST_RESET,
   USER_LOGIN_FAILED,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -87,7 +88,8 @@ export const showAllUsersReducer = (state = { users: [] }, action) => {
       return { loading: false, users: action.payload }
     case USER_LIST_FAILED:
       return { loading: false, error: action.payload }
-
+    case USER_LIST_RESET:
+      return { users: [] }
     default:
       return state
   }

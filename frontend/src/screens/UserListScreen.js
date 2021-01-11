@@ -6,15 +6,23 @@ import Message from '../components/Message.js'
 import Loader from '../components/Loader.js'
 import { showAllUsers } from '../actions/userActions'
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userList = useSelector((state) => state.showAllUsers)
   const { loading, error, users } = userList
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   useEffect(() => {
-    dispatch(showAllUsers())
-  }, [dispatch])
+    if (userInfo && userInfo.isAdmin === 'true') {
+      dispatch(showAllUsers())
+    } else {
+      history.push('/login')
+    }
+    // eslint-disable-next-line
+  }, [dispatch, history])
 
   const deleteHandler = (userId) => {
     console.log('deleted')
