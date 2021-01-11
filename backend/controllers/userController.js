@@ -118,10 +118,27 @@ const updateUserProfile = asyncHandler(async (request, response) => {
  * @access Admin only
  * @protected
  */
-
 const getAllUsers = asyncHandler(async (request, response) => {
   const users = await User.find({})
   response.json(users)
 })
 
-export { authUser, createUser, getUserProfile, updateUserProfile, getAllUsers }
+/**
+ * Deletes single user
+ * @route DELETE /api/users/:id
+ * @access Private
+ * @access Admin only
+ * @protected
+ */
+const deleteUser = asyncHandler(async (request, response) => {
+  const user = await User.findById(request.params.id)
+  if (user) {
+    await user.remove()
+    response.json({ message: 'User deleted' })
+  } else {
+    response.status(404)
+    throw new Error('User not found or does not exist')
+  }
+})
+
+export { authUser, createUser, getUserProfile, updateUserProfile, getAllUsers, deleteUser }
