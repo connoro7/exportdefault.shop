@@ -14,10 +14,10 @@ const Header = () => {
 
   // TODO - CD - 1-10-21
   // SEE ISSUE #79 - [FEATURE] Add quantity of cart items to Header component
-  let itemCount = 0
-  cartItems.forEach((item) => {
-    console.log(item.quantity)
-  })
+  // let itemCount = 0
+  // cartItems.forEach((item) => {
+  //   console.log(item.quantity)
+  // })
 
   const logoutHandler = () => {
     dispatch(logout())
@@ -52,6 +52,19 @@ const Header = () => {
                     <i className='fas fa-user'></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
+              )}
+              {userInfo && userInfo.isAdmin === 'true' && (
+                <NavDropdown title='Admin' id='adminMenu'>
+                  <LinkContainer to='/admin/userlist'>
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/productlist'>
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/orderlist'>
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>
