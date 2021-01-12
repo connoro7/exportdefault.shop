@@ -24,8 +24,7 @@ const UserListScreen = ({ history }) => {
     } else {
       history.push('/login')
     }
-    // eslint-disable-next-line
-  }, [dispatch, history, successDelete])
+  }, [dispatch, history, successDelete, userInfo])
 
   const deleteHandler = (userId) => {
     if (window.confirm('Confirm to delete')) {
@@ -61,7 +60,7 @@ const UserListScreen = ({ history }) => {
                 </td>
                 <td>{user.isAdmin === 'true' ? <i className='fas fa-check' style={{ color: 'green' }}></i> : <i className='fas fa-times' style={{ color: 'red' }}></i>}</td>
                 <td>
-                  <LinkContainer to={`/user/${user._id}`}>
+                  <LinkContainer to={`/admin/user/${user._id}`}>
                     <Button variant='light' className='btn btn-sm'>
                       <i className='fas fa-edit'></i>
                     </Button>
