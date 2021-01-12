@@ -2,6 +2,9 @@ import axios from 'axios'
 import { CART_RESET } from '../constants/cartConstants'
 import { ORDER_SHOW_USER_ORDERS_RESET } from '../constants/orderConstants'
 import {
+  USER_DELETE_FAILED,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
   USER_DETAILS_FAILED,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
@@ -179,6 +182,35 @@ export const showAllUsers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_LIST_FAILED,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+export const deleteUser = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DELETE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    // eslint-disable-next-line
+    const { data } = await axios.delete(`/api/users/${userId}`, config)
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAILED,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     })
   }
