@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const AdminPanelHomeScreen = ({ history }) => {
+const AdminHomeScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -20,4 +20,4 @@ const AdminPanelHomeScreen = ({ history }) => {
   return <></>
 }
 
-export default AdminPanelHomeScreen
+export default AdminHomeScreen
