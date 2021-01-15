@@ -60,7 +60,7 @@ const UserListScreen = ({ history }) => {
                 </td>
                 <td>{user.isAdmin === 'true' ? <i className='fas fa-check' style={{ color: 'green' }}></i> : <i className='fas fa-times' style={{ color: 'red' }}></i>}</td>
                 <td>
-                  <LinkContainer to={`/admin/user/${user._id}`}>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant='light' className='btn btn-sm'>
                       <i className='fas fa-edit'></i>
                     </Button>
