@@ -14,8 +14,7 @@ const AdminHomeScreen = ({ history }) => {
     } else {
       history.push('/login')
     }
-    // eslint-disable-next-line
-  }, [dispatch, history])
+  }, [dispatch, history, userInfo])
 
   return <></>
 }
