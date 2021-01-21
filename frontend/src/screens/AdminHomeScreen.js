@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const AdminPanelHomeScreen = ({ history }) => {
+const AdminHomeScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -14,10 +14,9 @@ const AdminPanelHomeScreen = ({ history }) => {
     } else {
       history.push('/login')
     }
-    // eslint-disable-next-line
-  }, [dispatch, history])
+  }, [dispatch, history, userInfo])
 
   return <></>
 }
 
-export default AdminPanelHomeScreen
+export default AdminHomeScreen

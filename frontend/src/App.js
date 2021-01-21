@@ -13,9 +13,10 @@ import ShippingScreen from './screens/ShippingScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
-import UserListScreen from './screens/UserListScreen'
-import AdminPanelHomeScreen from './screens/AdminPanelHomeScreen'
-import UserEditScreen from './screens/UserEditScreen'
+import AdminUserListScreen from './screens/AdminUserListScreen'
+import AdminHomeScreen from './screens/AdminHomeScreen'
+import AdminUserEditScreen from './screens/AdminUserEditScreen'
+import AdminProductsScreen from './screens/AdminProductsScreen'
 
 const App = () => {
   return (
@@ -23,9 +24,13 @@ const App = () => {
       <Header />
       <main className='py-3'>
         <Container>
-          <Route path='/admin' component={AdminPanelHomeScreen} />
-          <Route path='/admin/userlist' component={UserListScreen} />
-          <Route path='/admin/user/:id/edit' component={UserEditScreen} />
+          <Route path='/admin' component={AdminHomeScreen} />
+          <Route path='/admin/userlist' component={AdminUserListScreen} />
+          <Route path='/admin/user/:id/edit' component={AdminUserEditScreen} />
+          <Route path='/admin/productlist' component={AdminProductsScreen} />
+          {/* <Route path='/admin/product/:id/edit' component={AdminProductsEditScreen} /> */}
+          {/* <Route path='/admin/orderlist' component={AdminOrdersScreen} /> */}
+          {/* <Route path='/admin/order/:id/edit' component={AdminOrderEditScreen} /> */}
           <Route path='/order/:id' component={OrderScreen} />
           <Route path='/login' component={LoginScreen} />
           <Route path='/register' component={RegisterScreen} />
