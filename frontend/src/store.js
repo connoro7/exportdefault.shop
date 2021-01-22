@@ -9,9 +9,9 @@ import { orderCreateReducer, orderDetailsReducer, orderPaymentReducer, showUserO
 const reducer = combineReducers({
   // cart & products
   productList: productListReducer,
+  productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
-  productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
   cart: cartReducer,
   // user
