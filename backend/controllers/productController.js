@@ -88,8 +88,7 @@ const updateProduct = asyncHandler(async (request, response) => {
     product.image = image
     product.brand = brand
     product.category = category
-    product.countInStock = countI
-    nStock
+    product.countInStock = countInStock
     const updatedProduct = await product.save()
     response.json(updatedProduct)
   } else {
