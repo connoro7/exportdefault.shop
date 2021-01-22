@@ -4,7 +4,8 @@ import { Button, Table, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message.js'
 import Loader from '../components/Loader.js'
-import { deleteProduct, listProducts } from '../actions/productActions'
+import { deleteProduct, listProducts, createProduct } from '../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 const AdminProductsScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -12,30 +13,41 @@ const AdminProductsScreen = ({ history }) => {
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
 
+  const productCreate = useSelector((state) => state.productCreate)
+  const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate
+
   const productDelete = useSelector((state) => state.productDelete)
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
+
+  const productUpdate = useSelector((state) => state.productUpdate)
+  // eslint-disable-next-line
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin === 'true') {
-      dispatch(listProducts())
-    } else {
+    //
+    dispatch({ type: PRODUCT_CREATE_RESET })
+
+    if (!userInfo.isAdmin === 'true') {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo, successDelete])
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct._id}`)
+    } else {
+      dispatch(listProducts())
+    }
+  }, [dispatch, history, userInfo, successCreate, successDelete, createdProduct])
 
   const deleteHandler = (productId) => {
     if (window.confirm('Delete product?')) {
       dispatch(deleteProduct(productId))
-      dispatch(listProducts())
     }
   }
 
   const createProductHandler = () => {
-    console.log('createProductHandler')
-    //TODO - CD - 1/15/2021
+    dispatch(createProduct())
   }
 
   return (
@@ -52,6 +64,10 @@ const AdminProductsScreen = ({ history }) => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
+      {loadingUpdate && <Loader />}
+      {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
