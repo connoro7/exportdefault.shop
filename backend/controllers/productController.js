@@ -98,4 +98,4 @@ const updateProduct = asyncHandler(async (request, response) => {
   }
 })
 
-, createProduct, updateProduct }
+export { getProducts, getProductById, deleteProduct, createProduct, updateProduct }
