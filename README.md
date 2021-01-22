@@ -22,44 +22,49 @@ The technologies included in this project include (but not limited to):
 - **Paypal** API integration
 - Project deployment pipeline, via **Heroku**
 
-### Prerequisites
+### Prerequisites & Installation
 
-- TBD
-
-### Installing
-
-1. Clone the repo
+1. Clone repo to project directory
 2. Navigate to `./frontend` and install packages via `$ npm i`
-3. ...
+3. Navigate to base project directory and install packages via `$ npm i`
+4. Create your development `.env` file, containing:
+  - `PORT` for desired port to host development **server**
+  - `NODE_ENV` set to `DEVELOPMENT` (or `PRODUCTION`)
+  - `MONGO_URI` or equivalent NoSQL database URI
+  - `JWT_SECRET` for handling authentication tokens
+  - `PAYPAL_SANDBOX_XXX` accounts, for testing *Paypal* integration
+5. Start the server in development mode by running `npm run dev` in the base project directory.
+6. Wait for React to open the application or naviagate to `localhost:3000`
+
+In development mode, this application requires [`concurrently`](https://www.npmjs.com/package/concurrently) and [`nodemon`](https://www.npmjs.com/package/nodemon) for development `npm` scripts.
 
 ## API
 
 `exportdefault.shop` has a RESTful API architecture. The frontend and backend communicate via HTTP methods and JSON data, while the backend communicates with the MongoDB database via Mongoose.
 
+> ***Complete API descriptions, tests, and documentation can be found in `exportdefault.paw`***
+
 ```
 /api
-├── /products
-│   └── /_id
-└── /users
-    ├── /login
-    └── /profile 
+├── orders
+│   ├── _id        //Perform actions on a single order, by ID
+│   └── myorders   //Perform actions on a single user's orders
+├── products
+│   └── _id        //Perform actions on a single product, by ID
+└── users
+    ├── _id        //Perform actions on a single user, by ID
+    ├── login      //Login routes
+    └── profile    //User actions
+//Please see exportdefault.paw for complete API documentation and API testing
 ```
 
-## Running the tests
+## Testing
 
-- TBD
-
-### Break down into end to end tests
-
-- TBD
-
-### And coding style tests
-
-- TBD
+- Please see the API documentation for tests. Currently, all tests are embedded/integrated into the documentation, for your convenience.
 
 ## Deployment
 
-- TBD
+- This application is deployed via Heroku. 
 
 ## Built With
 
