@@ -9,6 +9,9 @@ import {
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
   PRODUCT_CREATE_FAILED,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAILED,
 } from '../constants/productConstants'
 
 export const listProducts = () => async (dispatch) => {
@@ -50,7 +53,7 @@ export const listProductDetails = (id) => async (dispatch) => {
 export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: PRODUCT_DETAILS_REQUEST,
+      type: PRODUCT_DELETE_REQUEST,
     })
 
     const {
@@ -66,11 +69,11 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     await axios.delete(`/api/products/${id}`, config)
 
     dispatch({
-      type: PRODUCT_DETAILS_SUCCESS,
+      type: PRODUCT_DELETE_SUCCESS,
     })
   } catch (error) {
     dispatch({
-      type: PRODUCT_DETAILS_FAILED,
+      type: PRODUCT_DELETE_FAILED,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     })
   }
