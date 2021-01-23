@@ -77,6 +77,7 @@ In development mode, this application requires [`concurrently`](https://www.npmj
 - [JWT: JSON Web Tokens](https://jwt.io/)
 - [React Bootstrap](https://react-bootstrap.github.io/)
 - [Bootswatch](https://bootswatch.com/)
+- [multer](https://www.npmjs.com/package/multer)
 
 ## Contributing
 
