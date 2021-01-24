@@ -60,7 +60,7 @@ In development mode, this application requires [`concurrently`](https://www.npmj
 
 ## Testing
 
-- Please see the API documentation for tests. Currently, all tests are embedded/integrated into the documentation, for your convenience.
+- Please see the API documentation for tests. Currently, API tests are integrated into the documentation.
 
 ## Deployment
 
