@@ -1,11 +1,13 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import path from 'path'
 import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config()
 
@@ -24,7 +26,15 @@ app.use('/api/users', userRoutes)
 // Mounts order routers onto the API at '/api/orders' address
 app.use('/api/orders', orderRoutes)
 
+// Mounts upload routers onto the API at '/api/upload' address
+app.use('/api/upload', uploadRoutes)
+
 app.get('/api/config/paypal', (request, response) => response.send(process.env.PAYPAL_CLIENT_ID))
+
+// Hack to make __dirname accessible to ES Modules
+const __dirname = path.resolve()
+// Make /uploads folder static
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 app.use(notFound)
 
