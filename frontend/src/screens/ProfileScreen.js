@@ -114,7 +114,10 @@ const ProfileScreen = ({ history }) => {
                   <td>{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
+                      <div>
+                        Paid: <br />
+                        {order.paidAt.substring(0, 10)}
+                      </div>
                     ) : (
                       <div>
                         <i className='fas fa-times' style={{ color: 'red' }}></i> Not yet paid
@@ -124,11 +127,13 @@ const ProfileScreen = ({ history }) => {
                   <td>
                     {!order.isPaid ? (
                       <div>Awaiting payment</div>
-                    ) : order.isDelievered ? (
-                      order.delieveredAt.substring(0, 10)
+                    ) : order.isDelivered ? (
+                      <div>
+                        Delivered: <br />
+                        {order.deliveredAt.substring(0, 10)}
+                      </div>
                     ) : (
                       <div>
-                        <i className='fas fa-times' style={{ color: 'red' }}></i>
                         {/* TODO -- CD, Jan 9 2021
                       Integrate order tracking via external freight logistics APIs 
                       Look up existing universal order tracking apps, look into the APIs that they use
