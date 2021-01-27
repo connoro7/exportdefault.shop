@@ -4,7 +4,16 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { productListReducer, productDetailsReducer, productDeleteReducer, productCreateReducer, productUpdateReducer } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, showAllUsersReducer, userDeleteReducer, userUpdateReducer } from './reducers/userReducers'
-import { orderCreateReducer, orderDetailsReducer, orderListReducer, orderPaymentReducer, showUserOrdersReducer } from './reducers/orderReducers'
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderInTransitReducer,
+  orderDeliveredReducer,
+  orderListReducer,
+  orderPackingReducer,
+  orderPaymentReducer,
+  showUserOrdersReducer,
+} from './reducers/orderReducers'
 
 const reducer = combineReducers({
   // cart & products
@@ -26,6 +35,9 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPayment: orderPaymentReducer,
+  orderPacking: orderPackingReducer,
+  orderInTransit: orderInTransitReducer,
+  orderDelivered: orderDeliveredReducer,
   showUserOrders: showUserOrdersReducer,
   orderList: orderListReducer,
 })
