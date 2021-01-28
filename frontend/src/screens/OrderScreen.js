@@ -6,8 +6,9 @@ import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { getOrderDetails, payOrder } from '../actions/orderActions'
-import { ORDER_PAYMENT_RESET } from '../constants/orderConstants'
+import { getOrderDetails, payOrder, packOrder, shipOrder, deliverOrder } from '../actions/orderActions'
+// eslint-disable-next-line
+import { ORDER_DELIVERED_RESET, ORDER_IN_TRANSIT_RESET, ORDER_PACKING_RESET, ORDER_PAYMENT_RESET } from '../constants/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
   const dispatch = useDispatch()
@@ -15,6 +16,7 @@ const OrderScreen = ({ match, history }) => {
   const [sdkReady, setSdkReady] = useState(false)
 
   const orderId = match.params.id
+
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
 
@@ -22,8 +24,18 @@ const OrderScreen = ({ match, history }) => {
   const { email } = userInfo
 
   const orderPayment = useSelector((state) => state.orderPayment)
-  // renaming loading and success because it's already been called
   const { loading: loadingPay, success: successPay } = orderPayment
+
+  const orderPacking = useSelector((state) => state.orderPacking)
+  // eslint-disable-next-line
+  const { loading: loadingPacking, success: successPacking } = orderPacking
+
+  const orderInTransit = useSelector((state) => state.orderInTransit)
+  // eslint-disable-next-line
+  const { loading: loadingInTransit, success: successInTransit } = orderInTransit
+
+  const orderDelivered = useSelector((state) => state.orderDelivered)
+  const { loading: loadingDelivered, success: successDelivered } = orderDelivered
 
   if (!loading) {
     // Calculate prices:
@@ -37,6 +49,9 @@ const OrderScreen = ({ match, history }) => {
   }
 
   useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal')
       const script = document.createElement('script')
@@ -48,9 +63,13 @@ const OrderScreen = ({ match, history }) => {
       }
       document.body.appendChild(script)
     }
-    // If order doesn't exist or has already been paid for, then dispatch orderId
-    if (!order || successPay) {
+
+    // If order doesn't exist OR has already been paid for OR has been delivered, then dispatch orderId.
+    if (!order || successPay || successDelivered) {
       dispatch({ type: ORDER_PAYMENT_RESET })
+      // TODO - CD 1/27/21 // dispatch({ type: ORDER_PACKING_RESET })
+      // TODO - CD 1/27/21 // dispatch({ type: ORDER_IN_TRANSIT_RESET })
+      dispatch({ type: ORDER_DELIVERED_RESET })
       dispatch(getOrderDetails(orderId))
     }
     // If order hasn't been paid for, check to see if paypal script has been loaded. If not, then load paypal script.
@@ -64,7 +83,20 @@ const OrderScreen = ({ match, history }) => {
     if (!order || order._id !== orderId) {
       dispatch(getOrderDetails(orderId))
     }
-  }, [dispatch, orderId, successPay, order])
+  }, [dispatch, orderId, successPay, successDelivered, order, history, userInfo])
+
+  // eslint-disable-next-line
+  const packingHandler = () => {
+    dispatch(packOrder(order))
+  }
+  // eslint-disable-next-line
+  const inTransitHandler = () => {
+    dispatch(shipOrder(order))
+  }
+
+  const deliveredHandler = () => {
+    dispatch(deliverOrder(order))
+  }
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
@@ -102,8 +134,9 @@ const OrderScreen = ({ match, history }) => {
                 <br />
                 {order.shippingAddress.city}, {order.shippingAddress.stateOrProvince} {order.shippingAddress.postalCode}, {order.shippingAddress.country}
               </p>
+
               {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='info'>Not yet shipped</Message>}
-              {/*  */}
+              {/* TODO - CD - 1/27/21 - Integrate admin button to mark order as shipped, and update UI to reflect this */}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Payment Method</h2>
@@ -178,6 +211,25 @@ const OrderScreen = ({ match, history }) => {
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
+                  <small>If payment options are taking a while to load, please refresh this page.</small>
+                </ListGroup.Item>
+              )}
+
+              {loadingPacking && <Loader />}
+              {loadingInTransit && <Loader />}
+              {loadingDelivered && <Loader />}
+              {/* If user is admin, the order has been paid, and order is not yet delivered, then: */}
+              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  {/* <Button type='button' className='btn btn-block' onClick={packingHandler}>
+                    Mark As Being Packed
+                  </Button>
+                  <Button type='button' className='btn btn-block' onClick={inTransitHandler}>
+                    Mark As In Transit
+                  </Button> */}
+                  <Button type='button' className='btn btn-block' onClick={deliveredHandler}>
+                    Mark As Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>

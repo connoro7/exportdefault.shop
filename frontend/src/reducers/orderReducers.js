@@ -16,7 +16,18 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAILED,
-  ORDER_LIST_RESET,
+  ORDER_PACKING_REQUEST,
+  ORDER_PACKING_SUCCESS,
+  ORDER_PACKING_FAILED,
+  ORDER_PACKING_RESET,
+  ORDER_IN_TRANSIT_REQUEST,
+  ORDER_IN_TRANSIT_SUCCESS,
+  ORDER_IN_TRANSIT_FAILED,
+  ORDER_IN_TRANSIT_RESET,
+  ORDER_DELIVERED_REQUEST,
+  ORDER_DELIVERED_SUCCESS,
+  ORDER_DELIVERED_FAILED,
+  ORDER_DELIVERED_RESET,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -99,6 +110,60 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       return { loading: false, orders: action.payload }
     case ORDER_LIST_FAILED:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const orderPackingReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_PACKING_REQUEST:
+      return { loading: true }
+    case ORDER_PACKING_SUCCESS:
+      return { loading: false, success: true }
+    case ORDER_PACKING_FAILED:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_PACKING_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const orderInTransitReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_IN_TRANSIT_REQUEST:
+      return { loading: true }
+    case ORDER_IN_TRANSIT_SUCCESS:
+      return { loading: false, success: true }
+    case ORDER_IN_TRANSIT_FAILED:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_IN_TRANSIT_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const orderDeliveredReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DELIVERED_REQUEST:
+      return { loading: true }
+    case ORDER_DELIVERED_SUCCESS:
+      return { loading: false, success: true }
+    case ORDER_DELIVERED_FAILED:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_DELIVERED_RESET:
+      return {}
     default:
       return state
   }
