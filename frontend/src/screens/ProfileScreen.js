@@ -139,7 +139,7 @@ const ProfileScreen = ({ history }) => {
                       Look up existing universal order tracking apps, look into the APIs that they use
                       Then add link to order tracking (from USPS, UPS, FedEx, DHL, )
                       */}
-                        <i className='fas fa-shipping-fast'></i> Track shipment
+                        In Transit
                       </div>
                     )}
                   </td>
