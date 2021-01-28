@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import path from 'path'
+import morgan from 'morgan'
 import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
@@ -17,6 +18,9 @@ const app = express()
 
 app.use(express.json())
 
+if (process.env.NODE_ENV === 'DEVELOPMENT') {
+  app.use(morgan('dev'))
+}
 // Mounts product routers onto the API at '/api/products' address
 app.use('/api/products', productRoutes)
 
