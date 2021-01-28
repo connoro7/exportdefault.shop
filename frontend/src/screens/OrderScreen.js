@@ -83,7 +83,7 @@ const OrderScreen = ({ match, history }) => {
     if (!order || order._id !== orderId) {
       dispatch(getOrderDetails(orderId))
     }
-  }, [dispatch, orderId, successPay, successDelivered, order])
+  }, [dispatch, orderId, successPay, successDelivered, order, history, userInfo])
 
   // eslint-disable-next-line
   const packingHandler = () => {
@@ -134,8 +134,9 @@ const OrderScreen = ({ match, history }) => {
                 <br />
                 {order.shippingAddress.city}, {order.shippingAddress.stateOrProvince} {order.shippingAddress.postalCode}, {order.shippingAddress.country}
               </p>
+
               {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='info'>Not yet shipped</Message>}
-              {/*  */}
+              {/* TODO - CD - 1/27/21 - Integrate admin button to mark order as shipped, and update UI to reflect this */}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Payment Method</h2>
@@ -210,13 +211,14 @@ const OrderScreen = ({ match, history }) => {
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
+                  <small>If payment options are taking a while to load, please refresh this page.</small>
                 </ListGroup.Item>
               )}
 
-              {/* If user is admin, the order has been paid, and order is not yet delivered, then: */}
               {loadingPacking && <Loader />}
               {loadingInTransit && <Loader />}
               {loadingDelivered && <Loader />}
+              {/* If user is admin, the order has been paid, and order is not yet delivered, then: */}
               {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <ListGroup.Item>
                   {/* <Button type='button' className='btn btn-block' onClick={packingHandler}>
