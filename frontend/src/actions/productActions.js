@@ -146,11 +146,6 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 }
 
-/**
- * 
- * @param {*} productId 
- * @param {object} review {rating, comment} 
- */
 export const createProductReview = (productId, review) => async (dispatch, getState) => {
   try {
     dispatch({
