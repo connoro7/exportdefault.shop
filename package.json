@@ -11,8 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:delete": "node backend/seeder -d",
-    "log": "cat ./logs/app.log",
-    "log-d": "date > ./logs/app.log"
+    "jsdoc": "jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",
