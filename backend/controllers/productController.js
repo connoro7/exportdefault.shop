@@ -97,4 +97,43 @@ const updateProduct = asyncHandler(async (request, response) => {
   }
 })
 
-export { getProducts, getProductById, deleteProduct, createProduct, updateProduct }
+/**
+ * Create a new review
+ * @route POST /api/products/:id/reviews
+ * @access Private
+ * @protected
+ */
+const createProductReview = asyncHandler(async (request, response) => {
+  const { rating, comment } = request.body
+
+  const product = await Product.findById(request.params.id)
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === request.user._id.toString())
+
+    if (alreadyReviewed) {
+      response.status(400)
+      throw new Error('Cannot create multiple reviews')
+    }
+    const review = {
+      name: request.user.name,
+      rating: Number(rating),
+      comment,
+      user: request.user._id,
+    }
+
+    product.reviews.push(review)
+
+    product.numReviews = product.reviews.length
+
+    product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
+
+    await product.save()
+    response.status(201).json({ message: 'Review created' })
+  } else {
+    response.status(404)
+    throw new Error('Product not found')
+  }
+})
+
+export { getProducts, getProductById, deleteProduct, createProduct, updateProduct, createProductReview }
