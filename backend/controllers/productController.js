@@ -5,7 +5,7 @@ import Product from '../models/productModel.js'
  * Fetch all products
  * @route GET /api/products
  * @access Public
- */ 
+ */
 const getProducts = asyncHandler(async (request, response) => {
   // TODO - CD - 1/29/21 - Create variable "pageSize"
   // number of products to show per "page"
@@ -19,7 +19,7 @@ const getProducts = asyncHandler(async (request, response) => {
     : {}
 
   // gets total number of products (or number of products that match search term)
-  const count = await Product.count({ ...keyword })
+  const count = await Product.countDocuments({ ...keyword })
   const products = await Product.find({ ...keyword })
     .limit(pageSize) // sets the number of products to be displayed on the page
     .skip(pageSize * (page - 1)) // logic for displaying the correct products on each "page"
