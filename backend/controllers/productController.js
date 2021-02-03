@@ -7,15 +7,24 @@ import Product from '../models/productModel.js'
  * @access Public
  */
 const getProducts = asyncHandler(async (request, response) => {
+  // TODO - CD - 1/29/21 - Create variable "pageSize"
+  // number of products to show per "page"
+  const pageSize = 2
+  // gets the current page being displayed
+  const page = Number(request.query.pageNumber) || 1
   const keyword = request.query.keyword
     ? {
         name: { $regex: request.query.keyword, $options: 'i' },
       }
     : {}
 
+  // gets total number of products (or number of products that match search term)
+  const count = await Product.countDocuments({ ...keyword })
   const products = await Product.find({ ...keyword })
+    .limit(pageSize) // sets the number of products to be displayed on the page
+    .skip(pageSize * (page - 1)) // logic for displaying the correct products on each "page"
 
-  response.json(products)
+  response.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
 /**
