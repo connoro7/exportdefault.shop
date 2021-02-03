@@ -9,7 +9,7 @@ import Product from '../models/productModel.js'
 const getProducts = asyncHandler(async (request, response) => {
   // TODO - CD - 1/29/21 - Create variable "pageSize"
   // number of products to show per "page"
-  const pageSize = 2
+  const pageSize = 9
   // gets the current page being displayed
   const page = Number(request.query.pageNumber) || 1
   const keyword = request.query.keyword
@@ -151,4 +151,15 @@ const createProductReview = asyncHandler(async (request, response) => {
   }
 })
 
-export { getProducts, getProductById, deleteProduct, createProduct, updateProduct, createProductReview }
+/**
+ * Gets "top rated" products
+ * @route GET /api/products/top
+ * @access Public
+ * @protected
+ */
+const getTopRatedProducts = asyncHandler(async (request, response) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  response.json(products)
+})
+
+export { getProducts, getProductById, deleteProduct, createProduct, updateProduct, createProductReview, getTopRatedProducts }
