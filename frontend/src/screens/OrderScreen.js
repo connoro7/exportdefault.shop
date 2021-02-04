@@ -221,7 +221,7 @@ const OrderScreen = ({ match, history }) => {
               {loadingInTransit && <Loader />}
               {loadingDelivered && <Loader />}
               {/* If user is admin, the order has been paid, and order is not yet delivered, then: */}
-              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              {userInfo && userInfo.isAdmin === 'true' && order.isPaid && !order.isDelivered && (
                 <ListGroup.Item>
                   {/* // TODO @connoro7 2/4/2021 - Add more buttons and control features for package status */}
                   {/* <Button type='button' className='btn btn-block' onClick={packingHandler}>
