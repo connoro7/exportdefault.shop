@@ -213,7 +213,6 @@ const OrderScreen = ({ match, history }) => {
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
-                  <small>If payment options are taking a while to load, please refresh this page.</small>
                 </ListGroup.Item>
               )}
 
