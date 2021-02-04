@@ -183,7 +183,7 @@ export const listTopRatedProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_RATED_REQUEST })
 
-    const { data } = await axios.get('/api/products/top')
+    const { data } = await axios.get(`/api/products/top`)
 
     dispatch({
       type: PRODUCT_TOP_RATED_SUCCESS,
