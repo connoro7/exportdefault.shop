@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Expire from '../components/Expire'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
 
@@ -32,7 +33,7 @@ const LoginScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      {error && <Message variant='danger'>{error}</Message>}
+      <Expire delay={5000}>{error && <Message variant='danger'>{error}</Message>}</Expire>
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='email'>
