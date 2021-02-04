@@ -6,9 +6,9 @@ import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Expire from '../components/Expire'
 import { getOrderDetails, payOrder, packOrder, shipOrder, deliverOrder } from '../actions/orderActions'
-// eslint-disable-next-line
-import { ORDER_DELIVERED_RESET, ORDER_IN_TRANSIT_RESET, ORDER_PACKING_RESET, ORDER_PAYMENT_RESET } from '../constants/orderConstants'
+import { ORDER_DELIVERED_RESET, ORDER_PAYMENT_RESET } from '../constants/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
   const dispatch = useDispatch()
@@ -108,7 +108,9 @@ const OrderScreen = ({ match, history }) => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message variant='danger'>{error}</Message>
+    <Expire delay={5000}>
+      <Message variant='danger'>{error}</Message>
+    </Expire>
   ) : (
     <>
       <Button type='button' className='btn- btn-secondary' onClick={viewAllMyOrdersHandler}>
@@ -221,6 +223,7 @@ const OrderScreen = ({ match, history }) => {
               {/* If user is admin, the order has been paid, and order is not yet delivered, then: */}
               {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <ListGroup.Item>
+                  {/* // TODO @connoro7 2/4/2021 - Add more buttons and control features for package status */}
                   {/* <Button type='button' className='btn btn-block' onClick={packingHandler}>
                     Mark As Being Packed
                   </Button>

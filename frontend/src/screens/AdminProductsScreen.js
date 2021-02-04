@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message.js'
 import Loader from '../components/Loader.js'
 import Paginate from '../components/Paginate.js'
+import Expire from '../components/Expire.js'
 import { deleteProduct, listProducts, createProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
@@ -67,11 +68,11 @@ const AdminProductsScreen = ({ history, match }) => {
         </Col>
       </Row>
       {loadingDelete && <Loader />}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      <Expire delay={5000}>{errorDelete && <Message variant='danger'>{errorDelete}</Message>}</Expire>
       {loadingCreate && <Loader />}
-      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
+      <Expire delay={5000}>{errorCreate && <Message variant='danger'>{errorCreate}</Message>}</Expire>
       {loadingUpdate && <Loader />}
-      {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+      <Expire delay={5000}>{errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}</Expire>
       {loading ? (
         <Loader />
       ) : error ? (
