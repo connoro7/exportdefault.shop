@@ -6,6 +6,7 @@ import Product from '../components/Product.js'
 import Message from '../components/Message.js'
 import Loader from '../components/Loader.js'
 import Paginate from '../components/Paginate.js'
+import Meta from '../components/Meta.js'
 import ProductCarousel from '../components/ProductCarousel.js'
 
 const HomeScreen = ({ match }) => {
@@ -24,6 +25,7 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
+      <Meta />
       {!keyword && <ProductCarousel />}
       <h1>Latest Products</h1>
       {loading ? (
