@@ -4,9 +4,11 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Expire from '../components/Expire'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { showUserOrders } from '../actions/orderActions'
 import { clearMessage } from '../actions/utilityActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -33,7 +35,8 @@ const ProfileScreen = ({ history }) => {
     if (!userInfo) {
       history.push('/login')
     } else {
-      if (!user?.name) {
+      if (!user || !user?.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
         dispatch(showUserOrders())
       } else {
@@ -41,7 +44,7 @@ const ProfileScreen = ({ history }) => {
         setEmail(user.email)
       }
     }
-  }, [dispatch, history, userInfo, user])
+  }, [dispatch, history, userInfo, user, success])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -58,9 +61,9 @@ const ProfileScreen = ({ history }) => {
     <Row>
       <Col md={3}>
         <h2>My Profile</h2>
-        {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
-        {success && <Message variant='success'>Profile updated!</Message>}
+        <Expire delay={5000}>{message && <Message variant='danger'>{message}</Message>}</Expire>
+        <Expire delay={5000}>{error && <Message variant='danger'>{error}</Message>}</Expire>
+        <Expire delay={5000}>{success && <Message variant='success'>Profile updated!</Message>}</Expire>
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
