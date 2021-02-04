@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-This project brings together everything you need for a fully-featured, fully custom, eCommerce site: product exploration and searching, product pages, carousels, and pagination, as well as authenticated sign-on and user accounts stored in a managed database, an admin dashboards to manage users/customers, products, and order details. The exportdefault.shop platform also has a product rating and review system, shopping carts, an integrated ordering system that handles marking orders as shipped/delivered, as well as the entire checkout process including shipping selection, payment options (credit/debit card processing, Paypal integration), and finally a custom database seeder script.
+This project brings together everything you need for a fully-featured, fully custom, eCommerce site: product exploration and searching, product pages, carousels, and pagination, as well as authenticated sign-on and user accounts stored in a managed database, an admin dashboards to manage users/customers, products, and order details. The exportdefault.shop platform also has a product rating and review system, shopping carts, an integrated ordering system that handles marking orders as shipped/delivered, as well as the entire checkout process including shipping selection, payment options (credit/debit card processing, and Paypal integration).
 
 The technologies included in this project include (but not limited to):
 
