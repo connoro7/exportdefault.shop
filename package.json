@@ -35,7 +35,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.18",
     "morgan": "^1.10.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "react-error-boundary": "^3.1.1"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
