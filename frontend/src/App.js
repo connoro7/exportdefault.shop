@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 import { ErrorBoundary } from 'react-error-boundary'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -56,11 +56,25 @@ const App = () => {
   )
 }
 
-function ErrorFallback({ error }) {
+function ErrorFallback({ error, resetErrorBoundary }) {
+  const styling = {
+    height: '100vh',
+    width: '100vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  }
+
   return (
-    <div role='alert'>
-      <p>Oops, there was an error:</p>
-      <p style={{ color: 'red' }}>{error.message}</p>
+    <div role='alert' as='errorpage' style={styling}>
+      <h2 style={{ marginBottom: '10vh' }}>Oh no! Looks like something went wrong:</h2>
+      {'\n'}
+      <pre>{error.message}</pre>
+      {'\n'}
+      <Button onClick={resetErrorBoundary} variant='info'>
+        Go Back
+      </Button>
     </div>
   )
 }
