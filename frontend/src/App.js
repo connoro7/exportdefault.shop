@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
+import { ErrorBoundary } from 'react-error-boundary'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ProductScreen from './screens/ProductScreen'
@@ -22,34 +23,45 @@ import AdminOrdersScreen from './screens/AdminOrdersScreen'
 
 const App = () => {
   return (
-    <Router>
-      <Header />
-      <main className='py-3'>
-        <Container>
-          <Route path='/admin' component={AdminHomeScreen} />
-          <Route path='/admin/userlist' component={AdminUserListScreen} />
-          <Route path='/admin/user/:id/edit' component={AdminUserEditScreen} />
-          <Route path='/admin/productlist' component={AdminProductsScreen} exact />
-          <Route path='/admin/productlist/:pageNumber' component={AdminProductsScreen} exact />
-          <Route path='/admin/product/:id/edit' component={AdminProductEditScreen} />
-          <Route path='/admin/orderlist' component={AdminOrdersScreen} />
-          <Route path='/order/:id' component={OrderScreen} />
-          <Route path='/login' component={LoginScreen} />
-          <Route path='/register' component={RegisterScreen} />
-          <Route path='/profile' component={ProfileScreen} />
-          <Route path='/product/:id' component={ProductScreen} />
-          <Route path='/cart/:id?' component={CartScreen} />
-          <Route path='/shipping' component={ShippingScreen} />
-          <Route path='/payment' component={PaymentScreen} />
-          <Route path='/placeorder' component={PlaceOrderScreen} />
-          <Route path='/search/:keyword' component={HomeScreen} exact />
-          <Route path='/page/:pageNumber' component={HomeScreen} exact />
-          <Route path='/search/:keywork/page/:pageNumber' component={HomeScreen} exact />
-          <Route path='/' component={HomeScreen} exact />
-        </Container>
-      </main>
-      <Footer />
-    </Router>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Router>
+        <Header />
+        <main className='py-3'>
+          <Container>
+            <Route path='/admin' component={AdminHomeScreen} />
+            <Route path='/admin/userlist' component={AdminUserListScreen} />
+            <Route path='/admin/user/:id/edit' component={AdminUserEditScreen} />
+            <Route path='/admin/productlist' component={AdminProductsScreen} exact />
+            <Route path='/admin/productlist/:pageNumber' component={AdminProductsScreen} exact />
+            <Route path='/admin/product/:id/edit' component={AdminProductEditScreen} />
+            <Route path='/admin/orderlist' component={AdminOrdersScreen} />
+            <Route path='/order/:id' component={OrderScreen} />
+            <Route path='/login' component={LoginScreen} />
+            <Route path='/register' component={RegisterScreen} />
+            <Route path='/profile' component={ProfileScreen} />
+            <Route path='/product/:id' component={ProductScreen} />
+            <Route path='/cart/:id?' component={CartScreen} />
+            <Route path='/shipping' component={ShippingScreen} />
+            <Route path='/payment' component={PaymentScreen} />
+            <Route path='/placeorder' component={PlaceOrderScreen} />
+            <Route path='/search/:keyword' component={HomeScreen} exact />
+            <Route path='/page/:pageNumber' component={HomeScreen} exact />
+            <Route path='/search/:keywork/page/:pageNumber' component={HomeScreen} exact />
+            <Route path='/' component={HomeScreen} exact />
+          </Container>
+        </main>
+        <Footer />
+      </Router>
+    </ErrorBoundary>
+  )
+}
+
+function ErrorFallback({ error }) {
+  return (
+    <div role='alert'>
+      <p>Oops, there was an error:</p>
+      <p style={{ color: 'red' }}>{error.message}</p>
+    </div>
   )
 }
 
