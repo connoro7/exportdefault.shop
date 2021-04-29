@@ -9,7 +9,7 @@ import Product from '../models/productModel.js'
 const getProducts = asyncHandler(async (request, response) => {
   // TODO - CD - 1/29/21 - Create variable "pageSize"
   // number of products to show per "page"
-  const pageSize = 9
+  const productsPerPage = 8
   // gets the current page being displayed
   const page = Number(request.query.pageNumber) || 1
   const keyword = request.query.keyword
@@ -21,10 +21,10 @@ const getProducts = asyncHandler(async (request, response) => {
   // gets total number of products (or number of products that match search term)
   const count = await Product.countDocuments({ ...keyword })
   const products = await Product.find({ ...keyword })
-    .limit(pageSize) // sets the number of products to be displayed on the page
-    .skip(pageSize * (page - 1)) // logic for displaying the correct products on each "page"
+    .limit(productsPerPage) // sets the number of products to be displayed on the page
+    .skip(productsPerPage * (page - 1)) // logic for displaying the correct products on each "page"
 
-  response.json({ products, page, pages: Math.ceil(count / pageSize) })
+  response.json({ products, page, pages: Math.ceil(count / productsPerPage) })
 })
 
 /**
@@ -157,7 +157,7 @@ const createProductReview = asyncHandler(async (request, response) => {
  * @access Public
  */
 const getTopRatedProducts = asyncHandler(async (request, response) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  const products = await Product.find({}).sort({ rating: -1 }).limit(5)
   response.json(products)
 })
 
