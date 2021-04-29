@@ -12,6 +12,7 @@
     "data:import": "node backend/seeder",
     "data:delete": "node backend/seeder -d",
     "jsdoc": "jsdoc -c jsdoc.json",
+    "heroku-deploy": "git commit -m ':rocket: PROD DEPLOY TO HEROKU' && git push heroku master",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": {
